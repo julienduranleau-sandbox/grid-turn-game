@@ -1,4 +1,4 @@
-import Grid from './Grid'
+import World from './World'
 import Renderer from './Renderer'
 import UnitManager from './UnitManager'
 import MouseHandler from './MouseHandler'
@@ -6,21 +6,22 @@ import KeyboardHandler from './KeyboardHandler'
 
 export default class Game {
 
-  grid: Grid
+  world: World
   renderer: Renderer
   unitManager: UnitManager
   mouse: MouseHandler
   keyboard: KeyboardHandler
 
   constructor() {
-    this.grid = new Grid(50, 50)
-    this.renderer = new Renderer()
+    this.world = new World(40, 30)
+    this.renderer = new Renderer(40, 30, 15, document.body)
     this.unitManager = new UnitManager()
-    this.mouse = new MouseHandler()
-    this.keyboard = new KeyboardHandler()
+    this.mouse = new MouseHandler(window)
+    this.keyboard = new KeyboardHandler(window)
+    this.tick()
   }
 
   tick() {
-    this.renderer.render(this.grid) 
+    this.renderer.render(this.world, this.unitManager.units) 
   }
 }
