@@ -1,8 +1,11 @@
+import Unit from './Unit'
+
 export default class Tile {
 
   x: number
   y: number
   isWall!: boolean
+  unit: Unit|null
 
   neighbours: {
     top: Tile|null,
@@ -22,6 +25,7 @@ export default class Tile {
   constructor(x: number, y: number) {
     this.x = x
     this.y = y
+    this.unit = null
 
     this.neighbours = {
       top: null,

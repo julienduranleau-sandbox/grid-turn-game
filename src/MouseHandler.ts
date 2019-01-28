@@ -1,5 +1,8 @@
+import Point from './Point'
+
 export default class MouseHandler {
 
+  pos: Point
   events: { [e: string]: Function[] }
 
   constructor(container: EventTarget) {
@@ -12,10 +15,17 @@ export default class MouseHandler {
       up: [],
       move: [],
     }
+
+    this.pos = {
+      x: 0,
+      y: 0,
+    }
+
+    this.on('move', this.updatePos.bind(this))
   }
 
   moveHandler(e: MouseEvent) {
-    this.callEvent('down', e)
+    this.callEvent('move', e)
   }
 
   downHandler(e: MouseEvent) {
@@ -23,7 +33,7 @@ export default class MouseHandler {
   }
 
   upHandler(e: MouseEvent) {
-    this.callEvent('down', e)
+    this.callEvent('up', e)
   }
 
   on(eventName: string, callback: Function) {
@@ -38,6 +48,11 @@ export default class MouseHandler {
     for (let i = 0, len = this.events[eventName].length; i < len; i++) {
       this.events[eventName][i](data)
     }
+  }
+
+  updatePos(e: MouseEvent) {
+    this.pos.x = e.offsetX
+    this.pos.y = e.offsetY
   }
 
 }

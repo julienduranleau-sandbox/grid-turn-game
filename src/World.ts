@@ -1,15 +1,18 @@
 import Tile from './Tile'
+import Point from './Point'
 
 export default class World {
 
   tiles: Tile[]
   nTiles: number
+  tileSize: number
   cols: number
   rows: number
 
-  constructor(cols: number, rows: number) {
+  constructor(cols: number, rows: number, tileSize: number) {
     this.cols = cols
     this.rows = rows
+    this.tileSize = tileSize
     this.tiles = this.generateTiles(cols, rows)
     this.nTiles = this.tiles.length
     this.applyTileNeighbours()
@@ -99,5 +102,12 @@ export default class World {
         tile.isWall = true
       }
     }
+  }
+
+  getTileContainingPixel(pos: Point): Tile {
+    const x = Math.floor(pos.x / this.tileSize)
+    const y = Math.floor(pos.y / this.tileSize)
+
+    return this.tiles[x + y * this.cols]
   }
 }

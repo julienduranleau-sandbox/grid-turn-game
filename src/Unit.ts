@@ -1,11 +1,17 @@
+import Tile from './Tile'
+
 export default class Unit {
 
-  x: number
-  y: number
+  tile: Tile
 
-  constructor(x: number, y: number) {
-    this.x = x
-    this.y = y
+  constructor(tile: Tile) {
+    this.tile = tile
+
+    if (this.tile.unit === null) {
+      this.tile.unit = this
+    } else {
+      throw "Trying to move unit on full tile"
+    }
   }
 
 }
